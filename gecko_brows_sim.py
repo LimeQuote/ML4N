@@ -5,6 +5,7 @@ import time
 
 # Path to your GeckoDriver executable
 geckodriver_path = r'C:\Users\Shaghayegh\geckodriver.exe'
+#I added the path to the environmental variables of the system
 
 # Initialize Firefox WebDriver
 driver = webdriver.Firefox()
