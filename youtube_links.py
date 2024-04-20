@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 # Load environment variables containing YouTube API key
 load_dotenv()
-YOUTUBE_API_KEY = os.getenv("REMOVED_REVOKED_API_KEY")
+YOUTUBE_API_KEY = os.getenv("API_Key")
 
 # Function to fetch video links using YouTube Data API
 def fetch_youtube_video_links(api_key, query, max_results=100):
@@ -41,9 +41,10 @@ def fetch_youtube_video_links(api_key, query, max_results=100):
 query = "machine learning"
 
 # Fetch 100 YouTube video links for the given query
-video_links = fetch_youtube_video_links("REMOVED_REVOKED_API_KEY", query)
+video_links = fetch_youtube_video_links("API_Key", query)
 
 # Write video links to a CSV file
+
 csv_file = "youtube_video_links.csv"
 with open(csv_file, "w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
