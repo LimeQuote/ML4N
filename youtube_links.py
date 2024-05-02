@@ -8,7 +8,7 @@ load_dotenv()
 YOUTUBE_API_KEY = os.getenv("AIzaSyCCkMZvhHSPBcH3Ssvu4iiJ0FWYUd_AA4M")
 
 # Function to fetch video links using YouTube Data API
-def fetch_youtube_video_links(api_key, query, max_results=100):
+def fetch_youtube_video_links(api_key, query, max_results=10):
     youtube = googleapiclient.discovery.build("youtube", "v3", developerKey=api_key)
 
     video_links = []
@@ -38,16 +38,16 @@ def fetch_youtube_video_links(api_key, query, max_results=100):
     return video_links
 
 # Query for YouTube videos (e.g., "machine learning tutorials")
-query = "machine learning"
+queries = ["machine learning", "Politechnico di Torino", "Data Science", "Artificial Intelligence", "Python"]
 
-# Fetch 100 YouTube video links for the given query
-video_links = fetch_youtube_video_links("AIzaSyCCkMZvhHSPBcH3Ssvu4iiJ0FWYUd_AA4M", query)
-
-# Write video links to a CSV file
+# Fetch 100 YouTube video links for each query and Write video links to a CSV file
 csv_file = "youtube_video_links.csv"
 with open(csv_file, "w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
-    writer.writerow(["Video Links"])
-    writer.writerows([[link] for link in video_links])
+    writer.writerow(["Query", "Video Links"])  # Write column headers
+    for query in queries:
+        video_links = fetch_youtube_video_links("AIzaSyCCkMZvhHSPBcH3Ssvu4iiJ0FWYUd_AA4M", query)
+        for link in video_links:
+            writer.writerow([query, link])
 
 print(f"Video links saved to {csv_file}")
