@@ -27,24 +27,10 @@ for index, row in df.iterrows():
     behavior = row["Behavior"]
     query = row["Query"]
     
-    print(f"{behavior} on {website}")
+    print(f"Behavior: {behavior} on {website}")
     
     # Open the link in Chrome
     driver.get(link)
-    # Accept cookies if prompted (specific to Bing)
-    if website == "Bing":
-        try:
-            accept_button = driver.find_element(By.ID, "bnp_btn_accept")
-            accept_button.click()
-        except NoSuchElementException:
-            pass  # If the accept button is not found, continue   
-    # Accept cookies if prompted
-    if website == "Google":
-        try:
-            accept_button = driver.find_element(By.ID, "L2AGLb")
-            accept_button.click()
-        except NoSuchElementException:
-            pass  # If the accept button is not found, continue
 
     print(f"Searching for {query} on {website}")
     search_box = None
@@ -54,6 +40,23 @@ for index, row in df.iterrows():
             if website == "Wikipedia":
                 search_box = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "searchInput")))
             elif website in ["Google", "Bing"]:
+                
+                # Accept cookies if prompted (specific to Bing)
+                if website == "Bing":
+                    try:
+                        accept_button = driver.find_element(By.ID, "bnp_btn_accept")
+                        accept_button.click()
+                    except NoSuchElementException:
+                        pass  # If the accept button is not found, continue
+
+                # Accept cookies if prompted
+                elif website == "Google":
+                    try:
+                        accept_button = driver.find_element(By.ID, "L2AGLb")
+                        accept_button.click()
+                    except NoSuchElementException:
+                        pass  # If the accept button is not found, continue
+
                 search_box = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "q")))
             
             search_box.clear()
