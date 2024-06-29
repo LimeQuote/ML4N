@@ -1,5 +1,5 @@
 ### This file saves the information of the search process (combination of the browsers, websites, and queries) in a CSV file ###
-### credentials: Shagha, Jun2024
+### credentials: Shaghayegh Samadzadehghezelghayeh, Jun2024
 
 
 
