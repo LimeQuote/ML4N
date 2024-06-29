@@ -1,3 +1,8 @@
+### This file saves the information of the search process (combination of the browsers, websites, and queries) in a CSV file ###
+### credentials: Shagha, Jun2024
+
+
+
 import pandas as pd
 
 # Define browser, websites, their links, corresponding behaviors, and queries
