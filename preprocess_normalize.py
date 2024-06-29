@@ -4,17 +4,17 @@ from sklearn.preprocessing import StandardScaler
 
 # Define the list of files and their labels
 files_and_labels = {
-    "Bing.csv": {"label": "Bing", "website": "Bing", "behavior": "Search", "browser": "Edge"},
-    "Google.csv": {"label": "Google", "website": "Google", "behavior": "Search", "browser": "Chrome"},
-    "Wikipedia.csv": {"label": "Wikipedia", "website": "Wikipedia", "behavior": "Read", "browser": "Firefox"},
-    "Edge.csv": {"label": "Edge", "website": "Unknown", "behavior": "Browse", "browser": "Edge"},
-    "Chrome.csv": {"label": "Chrome", "website": "Unknown", "behavior": "Browse", "browser": "Chrome"},
-    "Firefox.csv": {"label": "Firefox", "website": "Unknown", "behavior": "Browse", "browser": "Firefox"},
-    "MachineLearning.csv": {"label": "MachineLearning", "website": "MachineLearning", "behavior": "Read", "browser": "Chrome"},
-    "DeepLearning.csv": {"label": "DeepLearning", "website": "DeepLearning", "behavior": "Read", "browser": "Chrome"},
-    "Python.csv": {"label": "Python", "website": "Python", "behavior": "Read", "browser": "Firefox"},
-    "QuantumComputing.csv": {"label": "QuantumComputing", "website": "QuantumComputing", "behavior": "Read", "browser": "Edge"},
-    "Italy.csv": {"label": "Italy", "website": "Italy", "behavior": "Read", "browser": "Chrome"}
+    "Bing.csv": {"label": "Bing"},
+    "Google.csv": {"label": "Google"},
+    "Wikipedia.csv": {"label": "Wikipedia"},
+    "Edge.csv": {"label": "Edge"},
+    "Chrome.csv": {"label": "Chrome"},
+    "Firefox.csv": {"label": "Firefox"},
+    "MachineLearning.csv": {"label": "MachineLearning"},
+    "DeepLearning.csv": {"label": "DeepLearning"},
+    "Python.csv": {"label": "Python"},
+    "QuantumComputing.csv": {"label": "QuantumComputing"},
+    "Italy.csv": {"label": "Italy"}
 }
 
 # Define relevant fields
@@ -39,9 +39,6 @@ for file, meta in files_and_labels.items():
 
         # Add label columns
         grouped_df['label'] = meta['label']
-        grouped_df['website'] = meta['website']
-        grouped_df['behavior'] = meta['behavior']
-        grouped_df['browser'] = meta['browser']
 
         # Append the processed dataframe to the list
         processed_dfs.append(grouped_df)
@@ -67,8 +64,6 @@ def determine_class(label):
 
 combined_df['class'] = combined_df['label'].apply(determine_class)
 
-# Remove the unnecessary columns
-combined_df.drop(columns=['website', 'behavior', 'browser'], inplace=True)
 
 # Save the combined dataframe to a CSV file
 combined_file_path = 'Processed_All_Files_Normalized_With_Class.csv'
