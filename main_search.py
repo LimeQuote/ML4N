@@ -32,55 +32,48 @@ def simulate_search_with_selenium(row):
         # Open the website
         driver.get(link)
         time.sleep(1)  # Wait for the page to load
-        
         # Define search_box variable to store reference to the search input element
-        search_box = None
         # Check which website we are currently handling
+        # Use WebDriverWait to wait for the search input element to be present
+        search_box = None
         if website == "Wikipedia":
-            # Use WebDriverWait to wait for the search input element to be present
-            search_box = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "searchInput")))
+            search_box = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "searchInput")))
         elif website == "Bing":
-            # Use WebDriverWait to wait for the search input element to be present
+            try:
+                # Accept cookies if the button is present
+                accept_cookies_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bnp_btn_accept"]' )))
+                accept_cookies_button.click()
+            except: 
+                pass
             search_box = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "q")))
         elif website == "Google":
-            #try:
-            driver.find_element(By.ID, "L2AGLb").click()
-            search_box = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.NAME, "q")))
-            #except:
-                # Use WebDriverWait to wait for the search input element to be present
-                #search_box = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.NAME, "q")))
+            try:
+                driver.find_element(By.ID, "L2AGLb").click()
+            except:
+                pass
+            search_box = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "q")))
 
-        # If search_box is found, proceed
-        if search_box:
-            # Clear the search box
-            search_box.clear()
-            # Type the query into the search box
-            search_box.send_keys(query)
-            # Press Enter to perform the search
-            search_box.send_keys(Keys.RETURN)
-            # Wait for some time to allow the page to load (can be adjusted)
-            time.sleep(2)
+        
+        if search_box: # If search_box is found, proceed
+            search_box.clear()# Clear the search box
+            search_box.send_keys(query)# Type the query into the search box
+            search_box.send_keys(Keys.RETURN)# Press Enter to perform the search
+            time.sleep(2) # Wait for some time to allow the page to load (can be adjusted)
+
         else:
-            # Print a message if search_box is not found or not interactable
-            print("Search box not found or not interactable.")
+            print("Search box not found or not interactable.")# Print a message if search_box is not found or not interactable
+    except Exception as e:
+        print(f"Exception occured: {e}")
     finally:
-        # Close the WebDriver session
-        driver.quit()
+        driver.quit() # Close the WebDriver session
 
-
+repetition_id = 20
 # Read the CSV file containing browsers, websites, links, and behaviors using pandas
 csv_file = "websites_behaviors.csv"
 df = pd.read_csv(csv_file)
-for index, row in df.iterrows():
-    browser = row["browser"]    # Extract browser name from DataFrame row
-    website = row["website"]    # Extract website name from DataFrame row
-    link = row["link"]          # Extract link from DataFrame row
-    behavior = row["behavior"]  # Extract behavior from DataFrame row
-    query = row["query"]        # Extract query from DataFrame row
-    repetition_id = row["repetition_id"]
-
-repetition_id = row["repetition_id"]
 for i in range(repetition_id):
     print(f"repetition {i+1}")
-    simulate_search_with_selenium(df.iloc[0])
+    for index, row in df.iterrows():
+        if row['website'] == "Bing":
+            simulate_search_with_selenium(row)
 
