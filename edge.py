@@ -1,3 +1,5 @@
+#Read the csv file "websites_behaviors.csv" and do all the possible searches on edge browser
+
 # Import necessary libraries
 from selenium import webdriver
 from selenium.webdriver.common.by import By
