@@ -1,3 +1,6 @@
+#Read the csv file "websites_behaviors.csv" and do all the possible searches on chrome browser
+
+
 # The websites are predetermined. (change on websites_behaviors.py and update chrome.py)
 # Emulate "search" using Slenium webdriver. (you can emulate other actions as well)
 # Queries for search are pre determind. (change on websites_behaviors.py and update chrome.py)
