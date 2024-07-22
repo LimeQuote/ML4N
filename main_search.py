@@ -67,13 +67,13 @@ def simulate_search_with_selenium(row):
     finally:
         driver.quit() # Close the WebDriver session
 
-repetition_id = 20
+repetition_id = 60
 # Read the CSV file containing browsers, websites, links, and behaviors using pandas
 csv_file = "websites_behaviors.csv"
 df = pd.read_csv(csv_file)
-for i in range(repetition_id):
-    print(f"repetition {i+1}")
-    for index, row in df.iterrows():
-        if row['website'] == "Bing":
+for index, row in df.iterrows():
+    if row['browser'] == "Chrome" and row['website'] == "Google" and row['query'] == "Machine Learning" :
+        for i in range(repetition_id):
+            print(f"repetition {i+1}")
             simulate_search_with_selenium(row)
 
