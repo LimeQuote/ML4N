@@ -1,9 +1,28 @@
+"""
+Title: Automated Web Search Simulation using Selenium
+
+Description:
+This script automates the process of simulating user search behavior across different web browsers 
+and websites using Selenium WebDriver. The script reads metadata from a CSV file, which contains 
+information such as the browser type, target website, and search query. It then performs the 
+search on the specified website, handling dynamic content such as cookies and pop-up dialogs.
+
+Key Features:
+- Automates search tasks on popular websites like Google, Bing, and Wikipedia.
+- Supports multiple browsers including Google Chrome, Microsoft Edge, and Mozilla Firefox.
+- Uses WebDriverWait and expected_conditions to handle dynamic web elements and avoid common 
+  issues like StaleElementReferenceException.
+- Repeats searches multiple times to generate a large volume of traffic data for analysis.
+
+Author: Shaghayegh Samadzadeh
+Date: July 2024
+"""
+
 import pandas as pd
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -41,7 +60,7 @@ def simulate_search_with_selenium(row):
         elif website == "Bing":
             try:
                 # Accept cookies if the button is present
-                accept_cookies_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="bnp_btn_accept"]' )))
+                accept_cookies_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'bnp_btn_accept')))
                 accept_cookies_button.click()
             except: 
                 pass
@@ -67,12 +86,12 @@ def simulate_search_with_selenium(row):
     finally:
         driver.quit() # Close the WebDriver session
 
-repetition_id = 60
+repetition_id = 100
 # Read the CSV file containing browsers, websites, links, and behaviors using pandas
 csv_file = "websites_behaviors.csv"
 df = pd.read_csv(csv_file)
 for index, row in df.iterrows():
-    if row['browser'] == "Chrome" and row['website'] == "Google" and row['query'] == "Machine Learning" :
+    if row['browser'] == "Edge" and row['website'] == "Bing" and row['query'] == "Python" :
         for i in range(repetition_id):
             print(f"repetition {i+1}")
             simulate_search_with_selenium(row)
