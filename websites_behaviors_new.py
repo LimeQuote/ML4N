@@ -1,6 +1,10 @@
 ### This file saves the information of the search process (combination of the browsers, websites, and queries) in a CSV file ###
 ### credentials: Shaghayegh Samadzadeh, Jun2024
-
+""""
+This script logs the search process across different browsers, websites, and queries into a CSV file for analysis.
+Author: Shaghayegh Samadzadeh
+Date: June 2024
+"""
 
 
 import pandas as pd
