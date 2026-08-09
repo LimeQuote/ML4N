@@ -3,9 +3,9 @@ import csv
 import googleapiclient.discovery
 from dotenv import load_dotenv
 
-# Load environment variables containing YouTube API key
+# Load environment variables from a local .env file when available.
 load_dotenv()
-YOUTUBE_API_KEY = os.getenv("API_Key")
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 
 # Function to fetch video links using YouTube Data API
 def fetch_youtube_video_links(api_key, query, max_results=10):
@@ -37,25 +37,27 @@ def fetch_youtube_video_links(api_key, query, max_results=10):
 
     return video_links
 
-# Query for YouTube videos (e.g., "machine learning tutorials")
+# Queries for YouTube videos
 queries = ["machine learning", "Politechnico di Torino", "Data Science", "Artificial Intelligence", "Python"]
 
-<<<<<<< HEAD
-# Fetch 100 YouTube video links for each query and Write video links to a CSV file
-=======
-# Fetch 100 YouTube video links for the given query
-video_links = fetch_youtube_video_links("API_Key", query)
+def main():
+    if not YOUTUBE_API_KEY:
+        raise RuntimeError(
+            "YOUTUBE_API_KEY is not set. Copy .env.example to .env and add your key."
+        )
 
-# Write video links to a CSV file
+    csv_file = "youtube_video_links.csv"
+    with open(csv_file, "w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Query", "Video Links"])
 
->>>>>>> 559d4f2f5dd58b26e66a3297ef21c8f432cd30c0
-csv_file = "youtube_video_links.csv"
-with open(csv_file, "w", newline="", encoding="utf-8") as file:
-    writer = csv.writer(file)
-    writer.writerow(["Query", "Video Links"])  # Write column headers
-    for query in queries:
-        video_links = fetch_youtube_video_links("REMOVED_REVOKED_API_KEY", query)
-        for link in video_links:
-            writer.writerow([query, link])
+        for query in queries:
+            video_links = fetch_youtube_video_links(YOUTUBE_API_KEY, query)
+            for link in video_links:
+                writer.writerow([query, link])
 
-print(f"Video links saved to {csv_file}")
+    print(f"Video links saved to {csv_file}")
+
+
+if __name__ == "__main__":
+    main()
